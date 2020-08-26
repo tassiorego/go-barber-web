@@ -20,8 +20,8 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
-    const token = localStorage.getItem('CompreLocal@token');
-    const user = localStorage.getItem('CompreLocal@user');
+    const token = localStorage.getItem('GoBarber@token');
+    const user = localStorage.getItem('GoBarber@user');
 
     if (token && user) {
       return { token, user: JSON.parse(user) };
@@ -33,15 +33,15 @@ const AuthProvider: React.FC = ({ children }) => {
     const response = await api.post('/sessions', { email, password });
     const { user, token } = response.data;
 
-    localStorage.setItem('CompreLocal@token', token);
-    localStorage.setItem('CompreLocal@user', JSON.stringify(user));
+    localStorage.setItem('GoBarber@token', token);
+    localStorage.setItem('GoBarber@user', JSON.stringify(user));
 
     setData({ token, user });
   }, []);
 
   const signOut = useCallback(() => {
-    localStorage.removeItem('CompreLocal@token');
-    localStorage.removeItem('CompreLocal@user');
+    localStorage.removeItem('GoBarber@token');
+    localStorage.removeItem('GoBarber@user');
 
     setData({} as AuthState);
   }, []);
