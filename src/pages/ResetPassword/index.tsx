@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
@@ -14,15 +14,17 @@ import { useToast } from '../../hooks/toast';
 import { Container, Background, Content } from './styles';
 
 import logo from '../../assets/logo.svg';
+import api from '../../services/api';
 
 interface ResetPasswordFormData {
-  email: string;
   password: string;
+  password_confirmation: string;
 }
 
 const ResetPassword: React.FC = () => {
   const { addToast } = useToast();
   const history = useHistory();
+  const location = useLocation();
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = useCallback(
@@ -39,6 +41,27 @@ const ResetPassword: React.FC = () => {
         });
 
         await schema.validate(data, { abortEarly: false });
+
+        const token = location.search.replace('?token=', '');
+
+        if (!token) {
+          throw new Error();
+        }
+
+        const { password, password_confirmation } = data;
+
+        await api.post('/password/reset', {
+          password,
+          password_confirmation,
+          token,
+        });
+
+        addToast({
+          type: 'success',
+          title: 'Senha alterada com sucesso',
+        });
+
+        history.push('/');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -47,14 +70,13 @@ const ResetPassword: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Erro na autenticação',
-          description: err.message,
+          title: 'Erro ao resetar senha',
+          description:
+            'Envie um novo e-mail para resetar sua senha ou contate o suporte',
         });
-
-        history.push('/signin');
       }
     },
-    [addToast, history],
+    [addToast, history, location.search],
   );
 
   return (
