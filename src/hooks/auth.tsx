@@ -6,13 +6,19 @@ interface Credentials {
   password: string;
 }
 interface AuthContextData {
-  user: object;
+  user: User;
   signIn(credentials: Credentials): Promise<void>;
   signOut(): void;
 }
 
+interface User {
+  name: string;
+  avatar_url: string;
+  id: string;
+}
+
 interface AuthState {
-  user: object;
+  user: User;
   token: string;
 }
 
