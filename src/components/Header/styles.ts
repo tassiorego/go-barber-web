@@ -26,6 +26,15 @@ export const HeaderContent = styled.div`
       height: 20px;
     }
   }
+
+  a {
+    text-decoration: none;
+    color: ${({ theme }) => theme.colors.secondary};
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
 `;
 
 export const Profile = styled.div`
