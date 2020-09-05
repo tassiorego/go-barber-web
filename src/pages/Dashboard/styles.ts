@@ -187,16 +187,6 @@ export const Appointment = styled.div`
     padding: 16px 24px;
     border-radius: 10px;
     position: relative;
-
-    /* &::before {
-      position: absolute;
-      height: 80%;
-      width: 2px;
-      left: 0;
-      top: 10%;
-      background: ${({ theme }) => theme.colors.secondary};
-      content: '';
-    } */
   }
 
   img {
