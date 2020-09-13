@@ -63,7 +63,7 @@ const SignUp: React.FC = () => {
     <Container>
       <Background />
       <Content>
-        <img src={logo} alt="Compre Local" />
+        <img src={logo} alt="Go Barber" />
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input name="name" icon={FiUser} placeholder="Nome" />
           <Input name="email" type="email" icon={FiMail} placeholder="Email" />

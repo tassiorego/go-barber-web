@@ -59,7 +59,7 @@ const SignIn: React.FC = () => {
   return (
     <Container>
       <Content>
-        <img src={logo} alt="Compre Local" />
+        <img src={logo} alt="Go Barber" />
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input name="email" type="email" icon={FiMail} placeholder="Email" />
           <Input
